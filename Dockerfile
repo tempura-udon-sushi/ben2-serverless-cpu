@@ -112,12 +112,15 @@ RUN mkdir -p /comfyui/models/ben2_onnx /comfyui/models/llm /comfyui/models/LLM &
 # ============================================================================
 
 # CPU-specific environment
-ENV OMP_NUM_THREADS=0 \
-    MKL_NUM_THREADS=0 \
+# Force CPU-only mode for PyTorch and ComfyUI
+ENV CUDA_VISIBLE_DEVICES="" \
+    FORCE_CUDA=0 \
+    PYTORCH_CUDA_ALLOC_CONF="" \
     HF_HOME=/comfyui/models/LLM \
     TRANSFORMERS_CACHE=/comfyui/models/LLM \
     NUDENET_HOME=/root/.NudeNet \
-    CUDA_VISIBLE_DEVICES=""
+    PYTHONUNBUFFERED=1 \
+    COMFYUI_ARGS="--cpu"
 
 # Metadata
 LABEL build.date="2025-10-25" \
