@@ -122,9 +122,13 @@ ENV CUDA_VISIBLE_DEVICES="" \
     PYTHONUNBUFFERED=1 \
     COMFYUI_ARGS="--cpu"
 
+# Copy custom start script that forces CPU mode
+COPY ben2-serverless-cpu/start.sh /start.sh
+RUN chmod +x /start.sh
+
 # Metadata
 LABEL build.date="2025-10-25" \
-      version="1.1-optimized" \
+      version="1.2-cpu-fix" \
       models.ben2="BEN2_Base.onnx" \
       models.florence="Florence-2-base" \
       models.llama="Llama-3.1-8B-Instruct-Q5_K_M" \
