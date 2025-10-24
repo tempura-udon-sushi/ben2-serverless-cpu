@@ -52,6 +52,13 @@ RUN pip install --no-cache-dir -r /comfyui/custom_nodes/ComfyUI_BEN2_ONNX/requir
 # Install Florence-2 dependencies
 RUN pip install --no-cache-dir -r /comfyui/custom_nodes/comfyui-florence2/requirements.txt
 
+# Install build tools for llama-cpp-python compilation
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    libopenblas-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install llama-cpp-python (CPU version with optimizations)
 # CPU builds include BLAS/OpenBLAS for better performance
 RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" \
