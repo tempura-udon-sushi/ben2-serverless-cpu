@@ -1,0 +1,14 @@
+# Build artifacts
+*.tar
+*.tar.gz
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test outputs
+test_output/
+output_images/

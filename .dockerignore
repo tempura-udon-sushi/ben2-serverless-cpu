@@ -1,0 +1,64 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+README.md
+LICENSE
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info
+dist
+build
+
+# Virtual environments
+venv
+env
+ENV
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large files we don't need in context
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.mp4
+*.avi
+
+# Test files
+test_*
+*_test.py
+tests/
+
+# Logs
+*.log
+logs/
+
+# Build artifacts
+*.tar
+*.zip
+docker-compose.yml
+
+# Don't copy these from parent
+ComfyUI/output
+ComfyUI/input
+ComfyUI/temp
