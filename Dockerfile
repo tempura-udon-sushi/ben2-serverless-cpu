@@ -36,7 +36,8 @@ COPY ComfyUI/custom_nodes/comfyui-kjnodes /comfyui/custom_nodes/comfyui-kjnodes
 COPY ComfyUI/custom_nodes/save_image_no_metadata.py /comfyui/custom_nodes/save_image_no_metadata.py
 
 # Copy workflows
-COPY ComfyUI/user/default/workflows/API /comfyui/user/default/workflows/API
+COPY ComfyUI/user/default/workflows/BG_remove_BEN2_simple_1st.json /comfyui/user/default/workflows/BG_remove_BEN2_simple_1st.json
+COPY ComfyUI/user/default/workflows/BG_remove_BEN2_simple_2nd.json /comfyui/user/default/workflows/BG_remove_BEN2_simple_2nd.json
 
 # ============================================================================
 # STAGE 3: Install Python Dependencies (CPU-Optimized)
