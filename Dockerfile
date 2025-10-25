@@ -128,14 +128,18 @@ ENV CUDA_VISIBLE_DEVICES="" \
     NUDENET_HOME=/root/.NudeNet \
     PYTHONUNBUFFERED=1
 
+# Replace start script with CPU version that adds --cpu flag
+COPY ben2-serverless-cpu/start_cpu.sh /start.sh
+RUN chmod +x /start.sh
+
 # Metadata
 LABEL build.date="2025-10-25" \
-      version="1.4-cpu-pytorch" \
+      version="1.5-cpu-final" \
       models.ben2="BEN2_Base.onnx" \
       models.florence="Florence-2-base" \
       models.llama="Llama-3.1-8B-Instruct-Q5_K_M" \
       models.nudenet="detector_v2_default_checkpoint" \
       pytorch="cpu-only"
 
-# Use base image's start script (includes proper handler startup)
+# Use CPU-optimized start script
 CMD ["/start.sh"]
