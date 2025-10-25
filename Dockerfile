@@ -111,27 +111,31 @@ RUN mkdir -p /comfyui/models/ben2_onnx /comfyui/models/llm /comfyui/models/LLM &
 # STAGE 5: Environment & Runtime
 # ============================================================================
 
+# Reinstall PyTorch for CPU-only to avoid CUDA dependencies
+RUN pip uninstall -y torch torchvision torchaudio && \
+    pip install --no-cache-dir \
+    torch==2.5.0+cpu \
+    torchvision==0.20.0+cpu \
+    torchaudio==2.5.0+cpu \
+    --index-url https://download.pytorch.org/whl/cpu
+
 # CPU-specific environment
 # Force CPU-only mode for PyTorch and ComfyUI
 ENV CUDA_VISIBLE_DEVICES="" \
     FORCE_CUDA=0 \
-    PYTORCH_CUDA_ALLOC_CONF="" \
     HF_HOME=/comfyui/models/LLM \
     TRANSFORMERS_CACHE=/comfyui/models/LLM \
     NUDENET_HOME=/root/.NudeNet \
-    PYTHONUNBUFFERED=1 \
-    COMFYUI_ARGS="--cpu"
-
-# Copy custom start script that forces CPU mode
-COPY ben2-serverless-cpu/start.sh /start.sh
-RUN chmod +x /start.sh
+    PYTHONUNBUFFERED=1
 
 # Metadata
 LABEL build.date="2025-10-25" \
-      version="1.2-cpu-fix" \
+      version="1.4-cpu-pytorch" \
       models.ben2="BEN2_Base.onnx" \
       models.florence="Florence-2-base" \
       models.llama="Llama-3.1-8B-Instruct-Q5_K_M" \
-      models.nudenet="detector_v2_default_checkpoint"
+      models.nudenet="detector_v2_default_checkpoint" \
+      pytorch="cpu-only"
 
+# Use base image's start script (includes proper handler startup)
 CMD ["/start.sh"]
