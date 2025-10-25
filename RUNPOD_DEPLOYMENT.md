@@ -1,11 +1,12 @@
 # RunPod Serverless Deployment Guide - CPU Version
 
-## Image Details
+## ✅ Current Working Image
 
-- **Docker Hub**: `zerocalory/ben2-serverless-cpu:v1.1-optimized`
-- **Size**: ~25 GB
-- **Type**: CPU-optimized
+- **Docker Hub**: `zerocalory/ben2-serverless-cpu:v1.5-cpu-final`
+- **Size**: ~13.6 GB
+- **Type**: CPU-optimized (PyTorch CPU-only)
 - **Models**: BEN2, Florence-2, Llama 3.1 8B, NudeNet
+- **Status**: ✅ Tested and working (Oct 25, 2025)
 
 ## Step-by-Step Deployment
 
@@ -39,10 +40,10 @@ Select **CPU5 (Compute-Optimized)**
 
 **Container Image**: 
 ```
-zerocalory/ben2-serverless-cpu:v1.1-optimized
+zerocalory/ben2-serverless-cpu:v1.5-cpu-final
 ```
 
-**Container Disk**: `25 GB` (minimum, 30 GB recommended)
+**Container Disk**: `20 GB` (minimum, 25 GB recommended)
 
 **Docker Command**: Leave empty (uses default `/start.sh`)
 

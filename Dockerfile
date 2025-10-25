@@ -126,7 +126,9 @@ ENV CUDA_VISIBLE_DEVICES="" \
     HF_HOME=/comfyui/models/LLM \
     TRANSFORMERS_CACHE=/comfyui/models/LLM \
     NUDENET_HOME=/root/.NudeNet \
-    PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1 \
+    OMP_NUM_THREADS=8 \
+    MKL_NUM_THREADS=8
 
 # Replace start script with CPU version that adds --cpu flag
 COPY ben2-serverless-cpu/start_cpu.sh /start.sh

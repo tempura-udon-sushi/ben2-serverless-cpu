@@ -1,6 +1,14 @@
 # BEN2 Serverless Worker - CPU Version
 
-CPU-optimized Docker image for background removal using BEN2 ONNX, Florence-2, and safety checks.
+✅ **Working CPU implementation** for ComfyUI serverless on RunPod.
+
+**Current Version**: `v1.5-cpu-final` (Oct 25, 2025)
+
+## 📚 Documentation
+
+- **[CPU Implementation Guide](CPU_IMPLEMENTATION_GUIDE.md)** - Complete guide for implementing CPU workflows (reusable template)
+- **[RunPod Deployment Guide](RUNPOD_DEPLOYMENT.md)** - Step-by-step deployment instructions
+- **This README** - Quick reference and overview
 
 ## 🎯 Purpose
 
@@ -12,9 +20,15 @@ Testing and development version of BEN2 serverless worker that runs on CPU. Use 
 
 ## 📦 What's Inside
 
-### Models (All Baked In)
+### Docker Image
+- **Base**: `runpod/worker-comfyui:5.4.1-base`
+- **PyTorch**: CPU-only (2.5.0+cpu)
+- **Size**: ~13.6 GB
+- **Hub**: `zerocalory/ben2-serverless-cpu:v1.5-cpu-final`
+
+### Models (All Pre-loaded)
 - **BEN2_Base.onnx** (~223 MB) - Background removal
-- **Florence-2-base** (~850 MB) - Image captioning
+- **Florence-2-base** (~850 MB) - Image captioning  
 - **Llama-3.1-8B-Instruct** (~5.4 GB) - Safety classification
 - **NudeNet** (~60 MB) - Content safety
 
@@ -26,7 +40,22 @@ Testing and development version of BEN2 serverless worker that runs on CPU. Use 
 - comfyui-kjnodes
 - save_image_no_metadata.py
 
-## 🔧 Build Instructions
+## ✅ Quick Start
+
+### Option 1: Use Pre-built Image
+
+```bash
+# Already on Docker Hub - ready to use!
+zerocalory/ben2-serverless-cpu:v1.5-cpu-final
+```
+
+See [RUNPOD_DEPLOYMENT.md](RUNPOD_DEPLOYMENT.md) for deployment instructions.
+
+### Option 2: Build Your Own
+
+See [CPU_IMPLEMENTATION_GUIDE.md](CPU_IMPLEMENTATION_GUIDE.md) for complete build instructions.
+
+## 🔧 Build Instructions (Custom)
 
 ### Prerequisites
 - Docker installed
@@ -116,18 +145,40 @@ print(f"Job submitted: {job_id}")
 
 ## ⚡ Performance Notes
 
-### CPU vs GPU
-- **Cold Start**: ~30-60s (similar to GPU)
-- **Processing Time**: 
-  - GPU: 2-5s per image
-  - CPU: 10-30s per image (varies by vCPU count)
-- **Cost**: ~$0.0002/s (vs ~$0.0004/s GPU)
+### Tested Performance (v1.5-cpu-final)
+
+#### Fast Workflow (BEN2 Only)
+- **Time**: 30-40 seconds
+- **Models**: Background removal only
+- **vCPUs**: 4-8
+- **Cost**: ~$0.0015-0.003 per job
+- **Use Case**: Production-ready for background removal
+
+#### Full Workflow (BEN2 + Florence + Llama)
+- **Time**: 5-8 minutes
+- **Models**: BG removal + image captioning + safety check
+- **vCPUs**: 8-16 recommended
+- **Cost**: ~$0.03-0.05 per job
+- **Bottleneck**: Llama 8B (60-80% of processing time)
+- **Use Case**: Testing only; use GPU for production
+
+### CPU vs GPU Comparison
+- **Cold Start**: ~30-60s (similar for both)
+- **BG Removal Only**: 
+  - GPU: 15-20s
+  - CPU: 30-40s
+- **Full AI Pipeline**:
+  - GPU: 15-30s
+  - CPU: 5-8 minutes
+- **Cost per hour**:
+  - CPU (4 vCPUs): ~$0.17/hr
+  - GPU (RTX 4090): ~$0.70-1.40/hr
 
 ### Optimization Tips
-1. **Use CPU5 instances** - 5+ GHz significantly faster
-2. **Scale vCPUs** - 8 vCPUs recommended for production
-3. **Keep workers warm** - Set idle timeout to reduce cold starts
-4. **Batch processing** - Process multiple images per job
+1. **Use fast workflow** - Remove Llama for 10x speedup
+2. **Scale vCPUs** - 8 vCPUs for better performance
+3. **Keep workers warm** - Reduce cold start delays
+4. **Consider GPU** - For AI-heavy workflows
 
 ## 🔍 Model Configuration
 
