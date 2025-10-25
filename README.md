@@ -7,6 +7,7 @@
 ## 📚 Documentation
 
 - **[CPU Implementation Guide](CPU_IMPLEMENTATION_GUIDE.md)** - Complete guide for implementing CPU workflows (reusable template)
+- **[CPU Optimization Guide](CPU_OPTIMIZATION_GUIDE.md)** - Advanced optimization strategies to improve speed and reduce costs
 - **[RunPod Deployment Guide](RUNPOD_DEPLOYMENT.md)** - Step-by-step deployment instructions
 - **This README** - Quick reference and overview
 
